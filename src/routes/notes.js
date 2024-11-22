@@ -13,7 +13,7 @@ router.get('/getallnotes',NotesController.getAllNotes);
 router.get('/:id',NotesController.getNotesById);
 router.put('/edit/:id',NotesController.editNotes);
 router.put('/status/:id',NotesController.setComplete)
-router.delete('/:id',NotesController.deleteNote)
+router.delete('/delete/:id',NotesController.deleteNote)
 // router.post('/login',UserController.login)
 
 export default router

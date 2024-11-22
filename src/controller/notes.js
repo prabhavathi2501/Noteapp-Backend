@@ -1,4 +1,4 @@
-import notesModel from "../models/notes.js";
+import notesModel from "../models/notes.js"
 import Auth from "../common/auth.js"
 import userModel from "../models/User.js";
 
@@ -119,13 +119,16 @@ const deleteNote = async (req, res) => {
     try {
       const { id } = req.params;
       console.log("dlete id--?", id);
-      const result = await notesModel.findByIdAndDelete(id);
-  
-      if (!result) {
-        return res.status(400).json({ message: "Note not found" });
-      } else {
-        return res.status(200).json({ message: " Deleted Success" });
-      }
+        await notesModel.find(id).then((res)=>{
+          console.log(res)
+        })
+     
+      // if (!result) {
+      //   return res.status(400).json({ message: "Note not found" });
+      // } else {
+      //   return res.status(200).json({ message: " Deleted Success" });
+      // }
+      console.log("message")
     } catch (error) {
       res.status(500).send({
         messasge: "Internal server Error",
