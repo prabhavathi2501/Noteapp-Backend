@@ -119,16 +119,14 @@ const deleteNote = async (req, res) => {
     try {
       const { id } = req.params;
       console.log("dlete id--?", id);
-        await notesModel.find(id).then((res)=>{
-          console.log(res)
-        })
+      const result =  await notesModel.findByIdAndDelete(id)
      
-      // if (!result) {
-      //   return res.status(400).json({ message: "Note not found" });
-      // } else {
-      //   return res.status(200).json({ message: " Deleted Success" });
-      // }
-      console.log("message")
+      if (!result) {
+        return res.status(400).json({ message: "deleted" });
+      } else {
+        return res.status(200).json({ message: " Deleted Success" });
+      }
+      
     } catch (error) {
       res.status(500).send({
         messasge: "Internal server Error",
@@ -165,11 +163,45 @@ const deleteNote = async (req, res) => {
   }
 
 
+
+  const searchNotes =async(req,res)=>{
+    const{user}=req.user;
+    const{query}=req.query;
+    if(!query){
+      return res.status(401).json({error:true,message:"search  query is requied"})
+    }
+    try {
+      const matchingnotes = await notesModel.find({
+       uerId:user._id,
+        $or:[{title:{$regex:new RegExp(query,"i")}},
+          {notes:{$regex:new RegExp(query,"i")}}
+
+        ]
+       })
+       return req.json({
+        error:false,
+        notes:matchingnotes,
+        message:"serching notes is receive successfully"
+       })
+      
+    } catch (error) {
+
+      res.status(500).send({
+        messasge: "Internal server Error",
+        error: error.messasge,
+      });
+      
+    }
+
+  }
+
+
     export default {
         createNotes,
         getAllNotes,
         getNotesById,
         editNotes,
         deleteNote,
-        setComplete
+        setComplete,
+        searchNotes
     }

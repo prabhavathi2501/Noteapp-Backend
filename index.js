@@ -10,7 +10,7 @@ const PORT=process.env.PORT
 const app=express();
 app.use(cors());
 app.use(express.json());
-app.use(AppRouter)
+app.use("/",AppRouter)
 
 
 app.listen(PORT,()=>console.log(`app is listen ${PORT}`))

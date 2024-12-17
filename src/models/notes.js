@@ -5,7 +5,7 @@ const notesSchema = new mongoose.Schema({
     notes:{ type: String, required: [true, "notes is Required"] },
     createdAt: { type: Date, default: Date.now() },
     email:{type:String},
-    reminder:{ type: Date },
+    reminder:{ type: String },
     createdBy:{type:String,},
     status:{type:Boolean,default:true},
 },{
